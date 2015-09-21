@@ -29,7 +29,7 @@
         getInitialState: function () {
             return {cards: this.props.cards};
         },
-        handleClick: function (i) {
+        onImageClick: function (i) {
             var tempCards = this.state.cards,
                     currentCard = tempCards[ i ];
 
@@ -43,7 +43,7 @@
         render: function () {
             var imageCards = this.state.cards.map(function (card) {
                 return (
-                        <Image card={card} localHandleClick={this.handleClick}></Image>
+                        <Image card={card} localHandleClick={this.onImageClick}></Image>
                 );
             }, this);
 
