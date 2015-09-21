@@ -16,79 +16,69 @@
 <div id="content"></div>
 <script type="text/jsx">
 
-    var App = {};
+    var App = {
+        cards: [],
+        openCards: []
+    };
 
     var Container = React.createClass({
+        getInitialState: function () {
+            return {cards: this.props.cards};
+        },
+        handleClick: function (i) {
+            var tempCards = this.state.cards,
+                    currentCard = tempCards[ i ];
+
+            currentCard.isVisible = true;
+
+            this.setState({cards: tempCards});
+        },
         render: function () {
-            var imageCards = this.props.cards.map(function (card) {
+            var imageCards = this.state.cards.map(function (card) {
                 return (
-                        <Image orderId={card.orderId} image={card.image}></Image>
+                        <Image card={card} localHandleClick={this.handleClick}></Image>
                 );
-            });
+            }, this);
 
             return (
                     <div className="container">
                         {imageCards}
                         <Button/>
+                        <label>{this.props.renderTime.toString()}</label>
                     </div>
             );
         }
     });
 
     var Image = React.createClass({
-        getInitialState: function () {
-            return {
-                isShown: false,
-                displayImg: ''
-            };
-        },
-        handleClick: function () {
-            console.log(this.props)
-
-            if ( !this.state.isShown ) {
-                this.setState({isShown: true, displayImg: this.props.image})
-            }
-        },
         render: function () {
             return (
-                    <img src={this.state.displayImg} onClick={this.handleClick} className="imageCard">
+                    <img src={this.props.card.isVisible? this.props.card.image:''}
+                         onClick={this.props.localHandleClick.bind(null,this.props.card.id)}
+                         className="imageCard">
                     </img>
             );
         }
     });
 
     var Button = React.createClass({
-        getInitialState: function () {
-            return {
-                title: 'Start game',
-                isStart: true
-            };
-        },
-        handleClick: function () {
-            if ( this.state.isStart ) {
-                this.setState({isStart: false, title: 'Restart game'});
-            } else {
-
-                startApp();
-            }
-        },
         render: function () {
             return (
-                    <button onClick={this.handleClick}>{this.state.title}</button>
+                    <button>Restart game</button>
             );
         }
     });
 
-
     startApp();
 
-    function startApp() {
+    function startApp(time) {
         App.cards = mixCards([
             'cat1.jpg',
             'cat2.jpg'
         ]);
+
         React.render(
-                <Container cards={App.cards}/>,
+                <Container cards={App.cards} renderTime={new Date()}/>,
                 document.getElementById('content')
         );
     }
@@ -96,18 +86,13 @@
     function mixCards(imageArray) {
         var cardCount = imageArray.length * 2,
                 mixedArray = _.shuffle(_.range(cardCount)),
-                cards = [],
-                tempImageArray = imageArray.concat(imageArray);
+                cards = [];
 
-        for (var i = 0; i < cardCount; i++) {
-            cards.push({orderId: mixedArray[ i ], image: tempImageArray[ i ]});
-        }
+        imageArray.concat(imageArray).forEach(function (card, ind) {
+            cards.push({id: mixedArray[ ind ], image: card, isVisible: false});
+        });
 
-        cards = _.sortBy(cards, 'orderId');
-        console.log(cards)
-
-        return cards;
-
+        return _.sortBy(cards, 'id');
     }
 </script>
 </body>
