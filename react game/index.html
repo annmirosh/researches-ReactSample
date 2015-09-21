@@ -17,6 +17,10 @@
 <script type="text/jsx">
 
     var App = {
+        defaultImageArray: [
+            'cat1.jpg',
+            'cat2.jpg'
+        ],
         cards: [],
         openCards: []
     };
@@ -33,6 +37,9 @@
 
             this.setState({cards: tempCards});
         },
+        restartGame: function () {
+            this.setState({cards: mixCards(App.defaultImageArray)});
+        },
         render: function () {
             var imageCards = this.state.cards.map(function (card) {
                 return (
@@ -43,7 +50,7 @@
             return (
                     <div className="container">
                         {imageCards}
-                        <Button/>
+                        <Button localButtonClick={this.restartGame}/>
                         <label>{this.props.renderTime.toString()}</label>
                     </div>
             );
@@ -64,7 +71,7 @@
     var Button = React.createClass({
         render: function () {
             return (
-                    <button>Restart game</button>
+                    <button onClick={this.props.localButtonClick}>Restart game</button>
             );
         }
     });
@@ -72,10 +79,7 @@
     startApp();
 
     function startApp(time) {
-        App.cards = mixCards([
-            'cat1.jpg',
-            'cat2.jpg'
-        ]);
+        App.cards = mixCards(App.defaultImageArray);
 
         React.render(
                 <Container cards={App.cards} renderTime={new Date()}/>,
