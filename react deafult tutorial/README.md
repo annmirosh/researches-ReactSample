@@ -1,0 +1,1 @@
+This is default example of application on reactJS.
