@@ -33,7 +33,30 @@
             var tempCards = this.state.cards,
                     currentCard = tempCards[ i ];
 
+            if ( currentCard.isResolved ) {
+                return;
+            }
             currentCard.isVisible = true;
+
+            App.openCards.push(currentCard);
+
+            if ( App.openCards.length === 2 ) {
+                var firstCard = App.openCards[ 0 ],
+                        secondCard = App.openCards[ 1 ];
+
+                if ( firstCard.image != secondCard.image ) {
+                    tempCards.forEach(function (card) {
+                        card.isVisible = false;
+                    });
+                } else {
+                    _.filter(tempCards, function (card) {
+                        return card.id === firstCard.id || card.id === secondCard.id;
+                    }).forEach(function (card) {
+                        card.isResolved = true;
+                    });
+                }
+                App.openCards = [];
+            }
 
             this.setState({cards: tempCards});
         },
