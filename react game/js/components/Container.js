@@ -1,7 +1,7 @@
 var React = require('react'),
-  Button = require('./Button'),
-  Image = require('./Image'),
-  App = require('./../logic/App'),
+  Button = require('components/Button'),
+  Image = require('components/Image'),
+  App = require('logic/App'),
   _ = require('underscore');
 
 var

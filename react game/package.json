@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "Samples with applications on ReactJS",
   "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=production browserify -t reactify main.js | uglifyjs > compiled.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/annmirosh/researches-ReactSample.git"
@@ -24,6 +20,9 @@
   },
   "devDependencies": {
     "browserify": "^9.0.8",
+    "gulp": "^3.9.0",
+    "require-dir": "^0.3.0",
+    "vinyl-source-stream": "^1.1.0",
     "reactify": "^1.1.0",
     "uglify-js": "^2.4.20",
     "watchify": "^3.1.2"
