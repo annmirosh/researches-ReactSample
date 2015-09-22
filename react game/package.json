@@ -1,0 +1,31 @@
+{
+  "name": "react-game",
+  "version": "1.0.0",
+  "description": "Samples with applications on ReactJS",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "NODE_ENV=production browserify -t reactify main.js | uglifyjs > compiled.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annmirosh/researches-ReactSample.git"
+  },
+  "author": "Anna Miroshnichenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/annmirosh/researches-ReactSample/issues"
+  },
+  "homepage": "https://github.com/annmirosh/researches-ReactSample#readme",
+  "dependencies": {
+    "react": "0.13.3",
+    "underscore": "1.8.3",
+    "jquery": "2.1.1"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.8",
+    "reactify": "^1.1.0",
+    "uglify-js": "^2.4.20",
+    "watchify": "^3.1.2"
+  }
+}
