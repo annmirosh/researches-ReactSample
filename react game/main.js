@@ -5,6 +5,6 @@ var App = require('./logic/App');
 App.cards = App.mixCards(App.defaultImageArray);
 
 React.render(
-  <Container cards={App.cards} renderTime={new Date()}/>,
+  <Container cards={App.cards}/>,
   document.getElementById('content')
 );

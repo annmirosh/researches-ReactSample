@@ -51,7 +51,7 @@ var Container = React.createClass({
       <div className="container">
         {imageCards}
         <Button localButtonClick={this.restartGame}/>
-        <label>{this.props.renderTime.toString()}</label></div>
+      </div>
     );
   }
 });
