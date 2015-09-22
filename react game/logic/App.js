@@ -1,10 +1,19 @@
 var _ = require('underscore');
 var App = {
-  defaultImageArray: [ 'images/cat1.jpg', 'images/cat2.jpg' ],
+  defaultImageArray: [
+    'images/cat1.jpg',
+    'images/cat2.jpg',
+    'images/cat3.jpg'
+  ],
   cards: [],
   openCards: [],
-  mixCards: function (imageArray) {
-    var cardCount = imageArray.length * 2,
+  clearOpenCards: function () {
+    this.openCards = [];
+  },
+  mixCards: function () {
+    var
+      imageArray = this.defaultImageArray,
+      cardCount = imageArray.length * 2,
       mixedArray = _.shuffle(_.range(cardCount)),
       cards = [];
 

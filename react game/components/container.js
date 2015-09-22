@@ -1,59 +1,76 @@
-var React = require('react');
+var React = require('react'),
+  Button = require('./Button'),
+  Image = require('./Image'),
+  App = require('./../logic/App'),
+  _ = require('underscore');
 
-var Button = require('./Button');
-var Image = require('./Image');
-var App = require('./../logic/App');
+var
+  Container = React.createClass({
 
-var _ = require('underscore');
+    getInitialState: function () {
+      return {cards: this.props.cards};
+    },
 
-var Container = React.createClass({
+    onImageClick: function (i) {
+      var
+        tempCards = this.state.cards,
+        currentCard = tempCards[ i ],
+        self = this,
+        firstCard,
+        secondCard;
 
-  getInitialState: function () {
-    return {cards: this.props.cards};
-  },
-  onImageClick: function (i) {
-
-    var tempCards = this.state.cards, currentCard = tempCards[ i ];
-    if ( currentCard.isResolved ) {
-      return;
-    }
-    currentCard.isVisible = true;
-    App.openCards.push(currentCard);
-    if ( App.openCards.length === 2 ) {
-      var firstCard = App.openCards[ 0 ], secondCard = App.openCards[ 1 ];
-      if ( firstCard.image != secondCard.image ) {
-        tempCards.forEach(function (card) {
-          card.isVisible = false;
-        });
-      } else {
-        _.filter(tempCards, function (card) {
-          return card.id === firstCard.id || card.id === secondCard.id;
-        }).forEach(function (card) {
-          card.isResolved = true;
-        });
+      if ( currentCard.isResolved ) {
+        return;
       }
-      App.openCards = [];
-    }
-    this.setState({cards: tempCards});
-  },
 
-  restartGame: function () {
-    this.setState({cards: App.mixCards(App.defaultImageArray)});
-  },
+      currentCard.isVisible = true;
 
-  render: function () {
-    var imageCards = this.state.cards.map(function (card) {
+      App.openCards.push(currentCard);
+
+      if ( App.openCards.length === 2 ) {
+        firstCard = App.openCards[ 0 ];
+        secondCard = App.openCards[ 1 ];
+
+        if ( firstCard.image != secondCard.image ) {
+          setTimeout(function () {
+            tempCards.forEach(function (card) {
+              if ( !card.isResolved ) {
+                card.isVisible = false;
+              }
+            });
+            self.setState({cards: tempCards});
+          }, 500)
+        } else {
+          _.filter(tempCards, function (card) {
+            return card.id === firstCard.id || card.id === secondCard.id;
+          }).forEach(function (card) {
+            card.isResolved = true;
+          });
+        }
+        App.clearOpenCards();
+      }
+
+      self.setState({cards: tempCards});
+    },
+
+    restartGame: function () {
+      App.clearOpenCards();
+      this.setState({cards: App.mixCards()});
+    },
+
+    render: function () {
+      var imageCards = this.state.cards.map(function (card) {
+        return (
+          <Image card={card} localHandleClick={this.onImageClick}></Image>
+        );
+      }, this);
       return (
-        <Image card={card} localHandleClick={this.onImageClick}></Image>
+        <div className="container">
+          {imageCards}
+          <Button localButtonClick={this.restartGame}/>
+        </div>
       );
-    }, this);
-    return (
-      <div className="container">
-        {imageCards}
-        <Button localButtonClick={this.restartGame}/>
-      </div>
-    );
-  }
-});
+    }
+  });
 
 module.exports = Container;
