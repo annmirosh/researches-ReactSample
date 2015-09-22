@@ -1,4 +1,4 @@
-This is example of game 'Find similar pictures' on ReactJS.
+This is example of game "Find similar pictures" on ReactJS.
 
    
    To build project you should run:
