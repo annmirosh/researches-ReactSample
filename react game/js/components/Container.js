@@ -1,3 +1,4 @@
+'use strict';
 var React = require('react'),
   Button = require('components/Button'),
   Image = require('components/Image'),
@@ -31,7 +32,7 @@ var
         firstCard = App.openCards[ 0 ];
         secondCard = App.openCards[ 1 ];
 
-        if ( firstCard.image != secondCard.image ) {
+        if ( firstCard.image !== secondCard.image ) {
           setTimeout(function () {
             tempCards.forEach(function (card) {
               if ( !card.isResolved ) {
@@ -39,7 +40,7 @@ var
               }
             });
             self.setState({cards: tempCards});
-          }, 500)
+          }, 500);
         } else {
           _.filter(tempCards, function (card) {
             return card.id === firstCard.id || card.id === secondCard.id;
