@@ -1,4 +1,7 @@
-# researches-ReactSample
-Samples with applications on ReactJS:
+This is example of game "Find similar pictures" on ReactJS.
 
- - "React Game" folder contains simple example of game "Find similar pictures" on ReactJS.
+   
+   To build project you should run:
+   
+       $ sudo npm install
+       $ gulp
