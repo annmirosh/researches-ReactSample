@@ -62,7 +62,7 @@ var
     render: function () {
       var imageCards = this.state.cards.map(function (card) {
         return (
-          <Image card={card} localHandleClick={this.onImageClick}></Image>
+          <Image card={card} key={'image-'+card.id} localHandleClick={this.onImageClick}></Image>
         );
       }, this);
       return (
